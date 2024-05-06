@@ -15,6 +15,7 @@ const chatController = (io) => {
     // Handle disconnection
     socket.on('disconnect', () => {
       console.log('User disconnected');
+      //sample
     });
   });
 };
