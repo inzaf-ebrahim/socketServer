@@ -14,17 +14,19 @@ const io = new Server(httpServer, {
     methods: ["GET", "POST"],
   },
 });
+const commonRouter = require("./routes/commonRouter");
+app.use("/", commonRouter);
 
-app.get("/", async (req, res) => {
-  res.json({ message: "halo this is insaaf" });
-});
+
 
 io.on("connection", async (socket) => {
   console.log("a user connected ");
   socket.on("private message", async (data) => {
     const chat = data.message;
+    const sender = data.id;
     const message = new chatSchema({
       message: chat,
+      sender,
     });
     await message.save();
     io.emit("chat message", chat);
